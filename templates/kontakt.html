@@ -1,0 +1,11 @@
+{% extends "osnova.html" %}
+
+{% block vsebina %}
+    <h1>Kontakt</h1>
+
+    <h2>Moji emaili so:</h2>
+    {% for email in emaili %}
+        <p><a href="mailto://{{ email }}">{{ email }}</a></p>
+    {% endfor %}
+
+{% endblock %}

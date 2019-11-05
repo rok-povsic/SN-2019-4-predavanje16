@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prva stran</title>
+    <style>
+        #glava {
+            background-color: lightblue;
+        }
+        #noga {
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="glava">
+        <a href="/">Prva stran</a>
+        -
+        <a href="/kontakt">Kontakt</a>
+    </div>
+
+    <!-- Tukaj se bo nahajala HTML koda podstrani -->
+    {% block vsebina %}
+    {% endblock %}
+
+    <div id="noga">To je noga</div>
+
+</body>
+</html>

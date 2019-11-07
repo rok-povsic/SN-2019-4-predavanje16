@@ -21,8 +21,7 @@ def poslji_sporocilo():
 
     # Tukaj bi shranili te spremenljivki v bazo.
 
-    print("zadeva je: " + zadeva)
-    return "Hvala za poslano zadevo: " + zadeva
+    return render_template("sporocilo_poslano.html", zadeva=zadeva)
 
 
 

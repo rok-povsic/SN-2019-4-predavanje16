@@ -3,9 +3,10 @@
 {% block vsebina %}
     <h1>Kontakt</h1>
 
-    <h2>Moji emaili so:</h2>
-    {% for email in emaili %}
-        <p><a href="mailto://{{ email }}">{{ email }}</a></p>
-    {% endfor %}
+    <form method="post" action="/poslji-sporocilo">
+        <p>Zadeva: <input name="zadeva"></p>
+        <p>Sporočilo: <input name="sporocilo"></p>
+        <p><button type="submit">Pošlji</button></p>
+    </form>
 
 {% endblock %}

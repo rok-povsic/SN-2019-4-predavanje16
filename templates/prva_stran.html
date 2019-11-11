@@ -2,4 +2,19 @@
 
 {% block vsebina %}
 <h1>Dobrodošli na moji spletni strani</h1>
+
+{% if ime %}
+
+    <p>Prijavljen si pod imenom {{ ime }}</p>
+
+{% else %}
+
+    <p>Prijavi se:</p>
+    <form method="POST" action="/prijava">
+        <input name="ime" placeholder="Tvoje ime">
+        <button type="submit">Prijava</button>
+    </form>
+
+{% endif %}
+
 {% endblock %}

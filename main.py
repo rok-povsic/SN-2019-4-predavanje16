@@ -1,11 +1,13 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, make_response
 
 app = Flask(__name__)
 
 
 @app.route("/")
 def prva_stran():
-    return render_template("prva_stran.html")
+    ime = request.cookies.get("ime")
+
+    return render_template("prva_stran.html", ime=ime)
 
 
 @app.route("/kontakt")
@@ -24,6 +26,17 @@ def poslji_sporocilo():
     return render_template("sporocilo_poslano.html", zadeva=zadeva)
 
 
+@app.route("/prijava", methods=["POST"])
+def prijava():
+    ime = request.form.get("ime")
+
+    odgovor = make_response(redirect("/"))
+    odgovor.set_cookie("ime", ime)
+    return odgovor
+
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
+
+
+

@@ -7,6 +7,11 @@
 
     <p>Prijavljen si pod imenom {{ ime }}</p>
 
+    <form method="POST" action="/komentar">
+        <input name="vsebina" placeholder="Vpiši komentar">
+        <button type="submit">Pošlji</button>
+    </form>
+
 {% else %}
 
     <p>Prijavi se:</p>

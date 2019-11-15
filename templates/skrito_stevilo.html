@@ -1,0 +1,13 @@
+{% extends "osnova.html" %}
+
+{% block vsebina %}
+
+<h1>Skrito število</h1>
+
+<p>Vpiši skrito število:</p>
+<form method="post" action="/poslji-skrito-stevilo">
+    <input name="stevilo">
+    <button type="submit">Pošlji</button>
+</form>
+
+{% endblock %}

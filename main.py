@@ -1,3 +1,4 @@
+import random
 from flask import Flask, render_template, request, redirect, make_response
 from modeli import Komentar, db
 
@@ -55,6 +56,28 @@ def poslji_komentar():
     db.commit()
 
     return redirect("/")
+
+
+@app.route("/skrito-stevilo")
+def skrito_stevilo():
+    odgovor = make_response(render_template("skrito_stevilo.html"))
+
+    if not request.cookies.get("SkritoStevilo"):
+        stevilo = str(random.randint(1, 20))
+        odgovor.set_cookie("SkritoStevilo", stevilo)
+
+    return odgovor
+
+
+@app.route("/poslji-skrito-stevilo", methods=["POST"])
+def poslji_skrito_stevilo():
+    skrito_stevilo = request.cookies.get("SkritoStevilo")
+    vpisano_stevilo = request.form.get("stevilo")
+
+    if skrito_stevilo == vpisano_stevilo:
+        return "PRAVILNO"
+    else:
+        return "NI PRAVILNO"
 
 
 if __name__ == '__main__':

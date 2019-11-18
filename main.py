@@ -1,6 +1,7 @@
 import random
+import uuid
 from flask import Flask, render_template, request, redirect, make_response
-from modeli import Komentar, db
+from modeli import Komentar, db, Uporabnik
 
 app = Flask(__name__)
 db.create_all()
@@ -8,7 +9,13 @@ db.create_all()
 
 @app.route("/")
 def prva_stran():
-    ime = request.cookies.get("ime")
+    sejna_vrednost = request.cookies.get("sejna_vrednost")
+
+    uporabnik = db.query(Uporabnik).filter_by(sejna_vrednost=sejna_vrednost).first()
+    if uporabnik:
+        ime = uporabnik.ime
+    else:
+        ime = None
 
     # Preberemo vse komentarje
     komentarji = db.query(Komentar).all()
@@ -36,8 +43,19 @@ def poslji_sporocilo():
 def prijava():
     ime = request.form.get("ime")
 
+    sejna_vrednost = str(uuid.uuid4())
+
+    uporabnik = db.query(Uporabnik).filter_by(ime=ime).first()
+    if not uporabnik:
+        uporabnik = Uporabnik(ime=ime, sejna_vrednost=sejna_vrednost)
+    else:
+        uporabnik.sejna_vrednost = sejna_vrednost
+
+    db.add(uporabnik)
+    db.commit()
+
     odgovor = make_response(redirect("/"))
-    odgovor.set_cookie("ime", ime)
+    odgovor.set_cookie("sejna_vrednost", sejna_vrednost)
     return odgovor
 
 
@@ -45,10 +63,13 @@ def prijava():
 def poslji_komentar():
     vsebina_komentarja = request.form.get("vsebina")
 
+    sejna_vrednost = request.cookies.get("sejna_vrednost")
+    uporabnik = db.query(Uporabnik).filter_by(sejna_vrednost=sejna_vrednost).first()
+
     # Tukaj se bo komentar shranil v podatkovno bazo
 
     komentar = Komentar(
-        avtor=request.cookies.get("ime"),
+        avtor=uporabnik.ime,
         vsebina=vsebina_komentarja
     )
     db.add(komentar)

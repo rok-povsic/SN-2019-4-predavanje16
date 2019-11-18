@@ -42,14 +42,20 @@ def poslji_sporocilo():
 @app.route("/prijava", methods=["POST"])
 def prijava():
     ime = request.form.get("ime")
+    geslo = request.form.get("geslo")
 
     sejna_vrednost = str(uuid.uuid4())
 
+    # Geslo je potrebno šifrirati!
+
     uporabnik = db.query(Uporabnik).filter_by(ime=ime).first()
     if not uporabnik:
-        uporabnik = Uporabnik(ime=ime, sejna_vrednost=sejna_vrednost)
+        uporabnik = Uporabnik(ime=ime, geslo=geslo, sejna_vrednost=sejna_vrednost)
     else:
-        uporabnik.sejna_vrednost = sejna_vrednost
+        if geslo == uporabnik.geslo:
+            uporabnik.sejna_vrednost = sejna_vrednost
+        else:
+            return "Napačno geslo"
 
     db.add(uporabnik)
     db.commit()

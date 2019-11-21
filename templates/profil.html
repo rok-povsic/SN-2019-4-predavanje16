@@ -1,0 +1,15 @@
+{% extends "osnova.html" %}
+
+{% block vsebina %}
+
+<h1>Moj profil</h1>
+
+<p><strong>Ime: </strong> {{ uporabnik.ime }}</p>
+<p><strong>Email: </strong> {{ uporabnik.email }}</p>
+
+<br>
+
+<p><a href="/profil/uredi">Uredi</a></p>
+<p><a href="/profil/izbrisi">Izbriši</a></p>
+
+{% endblock %}

@@ -1,3 +1,4 @@
+import hashlib
 import random
 import uuid
 from flask import Flask, render_template, request, redirect, make_response
@@ -42,7 +43,8 @@ def poslji_sporocilo():
 @app.route("/prijava", methods=["POST"])
 def prijava():
     ime = request.form.get("ime")
-    geslo = request.form.get("geslo")
+    originalno_geslo = request.form.get("geslo")
+    geslo = hashlib.sha256(originalno_geslo.encode()).hexdigest()
 
     sejna_vrednost = str(uuid.uuid4())
 

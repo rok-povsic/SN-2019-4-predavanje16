@@ -120,6 +120,45 @@ def moj_profil():
     return render_template("profil.html", uporabnik=uporabnik)
 
 
+@app.route("/profil/uredi", methods=["GET", "POST"])
+def uredi_profil():
+    sejna_vrednost = request.cookies.get("sejna_vrednost")
+    uporabnik = db.query(Uporabnik).filter_by(sejna_vrednost=sejna_vrednost).first()
+
+    if not uporabnik:
+        return "Napačna seja"
+
+    if request.method == "GET":
+        return render_template("uredi_profil.html", uporabnik=uporabnik)
+    elif request.method == "POST":
+        uporabnik.ime = request.form.get("ime")
+        uporabnik.email = request.form.get("email")
+
+        db.add(uporabnik)
+        db.commit()
+
+        return redirect("/profil")
+
+
+@app.route("/profil/izbrisi", methods=["GET", "POST"])
+def izbrisi_profil():
+    sejna_vrednost = request.cookies.get("sejna_vrednost")
+    uporabnik = db.query(Uporabnik).filter_by(sejna_vrednost=sejna_vrednost).first()
+
+    if not uporabnik:
+        return "Napačna seja"
+
+    if request.method == "GET":
+        return render_template("izbrisi_profil.html")
+    elif request.method == "POST":
+        db.delete(uporabnik)
+        db.commit()
+
+        odgovor = make_response(redirect("/"))
+        odgovor.set_cookie("sejna_vrednost", expires=0)
+        return odgovor
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

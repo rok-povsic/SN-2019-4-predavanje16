@@ -6,7 +6,7 @@
 
 <ul>
 {% for uporabnik in uporabniki %}
-    <li>{{ uporabnik.ime }}</li>
+    <li><a href="/uporabniki/{{ uporabnik.id }}">{{ uporabnik.ime }}</a></li>
 {% endfor %}
 </ul>
 

@@ -1,0 +1,13 @@
+{% extends "osnova.html" %}
+
+{% block vsebina %}
+
+<h1>Uporabniki</h1>
+
+<ul>
+{% for uporabnik in uporabniki %}
+    <li>{{ uporabnik.ime }}</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

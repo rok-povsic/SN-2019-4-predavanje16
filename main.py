@@ -159,6 +159,12 @@ def izbrisi_profil():
         return odgovor
 
 
+@app.route("/uporabniki")
+def uporabniki():
+    users = db.query(Uporabnik).all()
+    return render_template("uporabniki.html", uporabniki=users)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 

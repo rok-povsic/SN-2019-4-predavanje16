@@ -6,7 +6,12 @@
 
 <ul>
 {% for uporabnik in uporabniki %}
-    <li><a href="/uporabniki/{{ uporabnik.id }}">{{ uporabnik.ime }}</a></li>
+    <li>
+        <a href="/uporabniki/{{ uporabnik.id }}">{{ uporabnik.ime }}</a>
+        {% if uporabnik.je_blokiran %}
+            <span style="color: red">BLOKIRAN</span>
+        {% endif %}
+    </li>
 {% endfor %}
 </ul>
 

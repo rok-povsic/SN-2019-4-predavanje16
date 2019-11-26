@@ -17,3 +17,4 @@ class Uporabnik(db.Model):
     email = db.Column(db.String)
     geslo = db.Column(db.String)
     sejna_vrednost = db.Column(db.String)
+    je_blokiran = db.Column(db.Boolean, default=False)
